@@ -41,24 +41,31 @@
     background-color: red;
 }
 
-.laptop-container {
+
+
+.laptops-specs_span {
+    display: block;
+}
+
+.showcase {
     background-color: yellowgreen;
     display: flex;
+    justify-content: space-between;
     margin: auto;
     margin-top: 1rem;
     width: 66%;
 }
 
-.laptop-container_img {
+#showcase-img {
     height: 12rem;
 }
 
-.laptop-container_info {
+.showcase-product {
     width: 40%;
     margin-left: 1rem;
 }
 
-.laptop-container_purchase {
+.showcase-checkout {
     width: 15%;
     margin-right: 1rem;
 }

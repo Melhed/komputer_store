@@ -18,7 +18,7 @@
 
             <div class="box_info">
                 <span>Balance</span>
-                <span>{balance}</span>
+                <span id="balance">{balance}</span>
             </div>
 
             <button>Get a loan</button>
@@ -29,7 +29,7 @@
 
             <div class="box_info">
                 <span>Pay</span>
-                <span>{pay}</span>
+                <span id="pay">{pay}</span>
             </div>
 
             <div class="work_btns">
@@ -41,35 +41,33 @@
         <div class="laptops box">
             <h2>Laptops</h2>
 
-            <div class="laptops_dropdown">
-                <select name="laptop-alternatives" id="laptop-alternatives">
-                    <option value="laptop1">Laptop1</option>
-                    <option value="laptop2">Laptop2</option>
-                    <option value="laptop3">Laptop3</option>
+            <div class="laptops-dropdown">
+                <select name="laptops-dropdown_alternatives" id="laptops-dropdown_alternatives">
+                    
                 </select>
             </div>
 
-            <div class="laptops_features">
-                <span>It has a screen</span>
-                <span>There's a keyboard</span>
-                <span>(Some keys might be missing)</span>
+            <div id="laptops-specs" class="laptops-specs">
+
             </div>
         </div>
     </div>
 
-    <div class="laptop-container">
-        <img class="laptop-container_img" src="https://hickory-quilled-actress.glitch.me/assets/images/1.png" alt="Laptop img">
-        
-        <div class="laptop-container_info">
-            <h2>{laptopName}</h2>
-            <p>{laptopInfo}</p>
+    <div class="showcase">
+        <div id="showcase-img-container">
         </div>
         
-        <div class="laptop-container_purchase">
-            <h2>{laptopPrice}</h2>
+        <div class="showcase-product">
+            <h2 id="showcase-product_name">{laptopName}</h2>
+            <span id="showcase-product_description">{laptopInfo}</span>
+        </div>
+        
+        <div class="showcase-checkout">
+            <h2 id="showcase-checkout_price">{laptopPrice}</h2>
             <button>BUY NOW</button>
         </div>
     </div>
 
+    <script src="app.js" type="module"></script>
 </body>
 </html>
