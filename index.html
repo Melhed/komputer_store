@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komputer Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <h1>Komputer Store</h1>
+    </nav>
+
+    <div class="container">
+        <div class="bank box">
+            <h2>Banker</h2>
+
+            <div class="box_info">
+                <span>Balance</span>
+                <span>{balance}</span>
+            </div>
+
+            <button>Get a loan</button>
+        </div>
+
+        <div class="work box">
+            <h2>Work</h2>
+
+            <div class="box_info">
+                <span>Pay</span>
+                <span>{pay}</span>
+            </div>
+
+            <div class="work_btns">
+                <button>Bank</button>
+                <button>Work</button>
+            </div>
+        </div>
+
+        <div class="laptops box">
+            <h2>Laptops</h2>
+
+            <div class="laptops_dropdown">
+                <select name="laptop-alternatives" id="laptop-alternatives">
+                    <option value="laptop1">Laptop1</option>
+                    <option value="laptop2">Laptop2</option>
+                    <option value="laptop3">Laptop3</option>
+                </select>
+            </div>
+
+            <div class="laptops_features">
+                <span>It has a screen</span>
+                <span>There's a keyboard</span>
+                <span>(Some keys might be missing)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="laptop-container">
+        <img class="laptop-container_img" src="https://hickory-quilled-actress.glitch.me/assets/images/1.png" alt="Laptop img">
+        
+        <div class="laptop-container_info">
+            <h2>{laptopName}</h2>
+            <p>{laptopInfo}</p>
+        </div>
+        
+        <div class="laptop-container_purchase">
+            <h2>{laptopPrice}</h2>
+            <button>BUY NOW</button>
+        </div>
+    </div>
+
+</body>
+</html>

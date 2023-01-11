@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 66%;
+    margin: auto;
+}
+
+.box {
+    width: 15rem;
+    
+}
+
+.box h2 {
+    margin-left: 1rem;
+}
+
+.work_btns {
+    width: 100%;
+}
+
+.work_btns button {
+    margin: auto;
+}
+
+.box_info {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.bank {
+    background-color: green;
+}
+
+.work {
+    background-color: blue;
+}
+
+.laptops {
+    background-color: red;
+}
+
+.laptop-container {
+    background-color: yellowgreen;
+    display: flex;
+    margin: auto;
+    margin-top: 1rem;
+    width: 66%;
+}
+
+.laptop-container_img {
+    height: 12rem;
+}
+
+.laptop-container_info {
+    width: 40%;
+    margin-left: 1rem;
+}
+
+.laptop-container_purchase {
+    width: 15%;
+    margin-right: 1rem;
+}
