@@ -5,6 +5,7 @@ const showcaseNameElement = document.getElementById("showcase-product_name");
 const showcaseDescriptionElement = document.getElementById("showcase-product_description");
 const showcasePriceElement = document.getElementById("showcase-checkout_price");
 
+// Sets laptop dropdown options into the DOM
 export function setDropdownOptions(laptops) {
     if(laptops[0] == null || laptops[0] == undefined) {
         console.log("Error: No laptops found.")
@@ -14,7 +15,7 @@ export function setDropdownOptions(laptops) {
     for(let i = 0; i < laptops.length; i++) {
         const optionElement = document.createElement("option");
         optionElement.value = laptops[i].id;
-        optionElement.innerHTML = laptops[i].title;
+        optionElement.innerText = laptops[i].title;
         dropdownElement.appendChild(optionElement);
     }
 
@@ -22,6 +23,7 @@ export function setDropdownOptions(laptops) {
     updateLaptopSpecs(laptops[0]);
 }
 
+// Sets the currently selected laptop's specs in the DOM
 export function updateLaptopSpecs(laptop) {
     specsElement.innerText = "";
 
@@ -33,6 +35,7 @@ export function updateLaptopSpecs(laptop) {
     }
 }
 
+// Sets the showcase info to the currently selected laptop in the DOM
 export function updateLaptopShowcase(laptop) {
     showcaseImgElement.innerHTML = "";
     const imgElement = document.createElement("img");
