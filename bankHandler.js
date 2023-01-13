@@ -18,13 +18,13 @@ function updateLoan(updatedLoan) {
     loan = updatedLoan;
     if(loan !== 0) {
         loanAmountElement.innerText = loan;
-        loanContainerElement.style.display = "";
-        repayLoanBtnElement.style.display = "";
+        loanContainerElement.classList = "flex justify-between mx-5 mt-5";
+        repayLoanBtnElement.classList = "bg-violet-800 text-white text-lg font-semibold py-0.5 px-1 rounded-br-md w-1/2";
         return;
     }
     loanAmountElement.innerText = 0;
-    loanContainerElement.style.display = "none";
-    repayLoanBtnElement.style.display = "none";
+    loanContainerElement.classList = "hidden";
+    repayLoanBtnElement.classList = "hidden";
 }
 
 

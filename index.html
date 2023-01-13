@@ -5,67 +5,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Komputer Store</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="/dist/output.css" rel="stylesheet">
 </head>
 <body>
     <nav>
-        <h1>Komputer Store</h1>
+        <h1 class="text-slate-900 font-semibold text-4xl">Komputer Store</h1>
     </nav>
 
-    <div class="container">
-        <div id="bank" class="bank box">
-            <h2>Banker</h2>
+    <div class="flex w-full m-5">
+        <div id="bank" class="w-64 h-52 bg-slate-200 rounded-md relative">
+            <h2 class="text-2xl font-semibold text-center mt-1">Banker</h2>
 
-            <div id="bank-info" class="box_info">
-                <div id="balance-container">
+            <div id="bank-info">
+                <div id="balance-container" class="flex justify-between mx-5 mt-5">
                     <span>Balance</span>
                     <span id="balance">0 kr</span>
                 </div>
-                <div id="loan-container" style="display:none">
+
+                <div id="loan-container" class="hidden">
                     <span>Loan</span>
                     <span id="loanAmount"></span>
                 </div>
             </div>
-
-            <button id="take-loan-btn">Take a loan</button>
-            <button id="repay-loan-btn" style="display:none">Repay loan</button>
+            <div class="w-full flex absolute bottom-0">
+                <button id="take-loan-btn" class="bg-violet-600 text-white text-lg font-semibold py-0.5 px-1 rounded-bl-md w-1/2">Take a loan</button>
+                <button id="repay-loan-btn" class="hidden">Repay loan</button>
+            </div>
 
         </div>
 
-        <div class="work box">
-            <h2>Work</h2>
-
-            <div class="box_info">
+        <div class="w-64 h-52 bg-slate-200 rounded-md relative">
+            <h2 class="text-2xl font-semibold text-center mt-1">Work</h2>
+            <div class="flex justify-between mx-5 mt-5">
                 <span>Pay</span>
                 <span id="pay">0 kr</span>
             </div>
 
-            <div>
-                <button id="banktransfer-btn">Bank</button>
-                <button id="work-btn">Work</button>
+            <div class="w-full flex absolute bottom-0">
+                <button id="banktransfer-btn" class="bg-sky-500 text-white text-lg font-semibold py-0.5 px-1 rounded-bl-md w-1/2">Bank</button>
+                <button id="work-btn" class="bg-sky-700 text-white text-lg font-semibold py-0.5 px-1 rounded-bl-md w-1/2">Work</button>
             </div>
         </div>
 
-        <div class="laptops box">
+        <div>
             <h2>Laptops</h2>
 
             <div class="laptops-dropdown">
                 <select name="laptops-dropdown_alternatives" id="laptops-dropdown_alternatives"></select>
             </div>
 
-            <div id="laptops-specs" class="laptops-specs"></div>
+            <div id="laptops-specs"></div>
         </div>
     </div>
 
-    <div class="showcase">
+    <div class="flex m-10 justify-between">
         <div id="showcase-img-container"></div>
         
-        <div class="showcase-product">
+        <div>
             <h2 id="showcase-product_name">{laptopName}</h2>
             <span id="showcase-product_description">{laptopInfo}</span>
         </div>
         
-        <div class="showcase-checkout">
+        <div>
             <h2 id="showcase-checkout_price">{laptopPrice}</h2>
             <button id="showcase-checkout_btn">BUY NOW</button>
         </div>
