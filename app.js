@@ -1,6 +1,6 @@
-import { setDropdownOptions, updateLaptopSpecs, updateLaptopShowcase } from "./laptopHandler.js";
-import { updateBalance, updateLoan} from "./bankHandler.js";
-import { updatePay } from "./workHandler.js";
+import { laptop } from "./laptopHandler.js";
+import { bank } from "./bankHandler.js";
+import { work } from "./workHandler.js";
 
 const takeLoanBtnElement = document.getElementById("take-loan-btn");
 const repayLoanBtnElement = document.getElementById("repay-loan-btn");
@@ -13,84 +13,79 @@ const numRegex = new RegExp(/[0-9]/g);
 
 let laptops = [];
 let selectedLaptop;
-let balance = 0;
-let loan = 0;
-let pay = 0;
 
 fetch(APIEndpoint)
     .then(response => response.json())
     .then(data => laptops = data)
     .then(laptops => {
-        setDropdownOptions(laptops);
+        laptop.setDropdownOptions(laptops);
         selectedLaptop = laptops[0];
     });
 
 function handleLaptopSelection(e) {
     selectedLaptop = laptops[e.target.selectedIndex];
-    updateLaptopSpecs(selectedLaptop);
-    updateLaptopShowcase(selectedLaptop);
+    laptop.updateLaptopSpecs(selectedLaptop);
+    laptop.updateLaptopShowcase(selectedLaptop);
 }
 
 function takeLoan() {
     const loanAmount = prompt("How much would you like to loan?");
-    if(loan > 0) return alert("Repay your current loan before taking a new one.");
+    if(bank.getLoan() > 0) return alert("Repay your current loan before taking a new one.");
     if(!numRegex.test(loanAmount)) return alert("Numeric digits only.");
-    if(loanAmount > (balance*2) || loanAmount == 0) return alert("You cannot take this loan")
-    
-    loan = parseInt(loanAmount);
-    balance += parseInt(loanAmount);
+    if(loanAmount > (bank.getBalance()*2) || loanAmount == 0) return alert("You cannot take this loan")
 
-    updateBalance(balance);
-    updateLoan(loan);
+    bank.updateBalance(bank.getBalance() + parseInt(loanAmount));
+    bank.updateLoan(parseInt(loanAmount));
 }
 
 function transferPayToBank() {
-    if(pay === 0) return alert("There is nothing to transfer!");
-    if(loan === 0) {
-        updateBalance(balance += pay);
-        updatePay(pay = 0);
+    if(work.getPay() === 0) return alert("There is nothing to transfer!");
+    if(bank.getLoan() === 0) {
+        bank.updateBalance(bank.getBalance() + work.getPay());
+        work.updatePay(0);
         return;
     }
 
-    let loanPayment = (pay*0.1);
-    let bankTransfer = (pay*0.9);
-    updatePay(pay = 0);
+    let loanPayment = (work.getPay()*0.1);
+    let bankTransfer = (work.getPay()*0.9);
+    work.updatePay(0);
 
-    if(loanPayment >= loan) {
-        loanPayment -= loan;
-        updateLoan(loan = 0);
-        updateBalance(balance += (bankTransfer + loanPayment));
+    if(loanPayment >= bank.getLoan()) {
+        loanPayment -= bank.getLoan();
+        bank.updateLoan(0);
+        bank.updateBalance(bank.getBalance() + (bankTransfer + loanPayment));
         return;
     }
-    updateLoan(loan -= loanPayment);
+    bank.updateBalance(bank.getBalance() + bankTransfer);
+    bank.updateLoan(bank.getLoan() - loanPayment);
 }
 
 function repayLoan() {
-    if(pay >= loan) {
-        updatePay(pay -= loan);
-        updateLoan(loan = 0);
+    if(work.getPay() >= bank.getLoan()) {
+        work.updatePay(work.getPay() - bank.getLoan());
+        bank.updateLoan(0);
         return;
     }
-    updateLoan(loan -= pay);
-    updatePay(pay = 0);
+    bank.updateLoan(bank.getLoan() - work.getPay());
+    work.updatePay(0);
 }
 
-function work() {
-    updatePay(pay += 100);
+function doWork() {
+    work.updatePay(work.getPay() + 100);
 }
 
 function buyLaptop() {
-    if(balance >= selectedLaptop.price) {
-        updateBalance(balance -= selectedLaptop.price);
+    if(bank.getBalance() >= selectedLaptop.price) {
+        bank.updateBalance(bank.getBalance() -= selectedLaptop.price);
         alert(`You have purchased the ${selectedLaptop.title}!`);
         return;
     }
-    alert(`You need ${selectedLaptop.price - balance} kr more to afford this laptop!`);
+    alert(`You need ${selectedLaptop.price - bank.getBalance()} kr more to afford this laptop!`);
 }
 
 takeLoanBtnElement.addEventListener("click", takeLoan);
 repayLoanBtnElement.addEventListener("click", repayLoan);
 bankTransferBtnElement.addEventListener("click", transferPayToBank);
-workBtnElement.addEventListener("click", work);
+workBtnElement.addEventListener("click", doWork);
 dropdownElement.addEventListener("change", handleLaptopSelection);
 checkoutBtn.addEventListener("click", buyLaptop);

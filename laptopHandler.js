@@ -47,3 +47,9 @@ export function updateLaptopShowcase(laptop) {
     showcaseDescriptionElement.innerText = laptop.description;
     showcasePriceElement.innerText = new Intl.NumberFormat("sv-SV", {style: "currency", currency: "SEK", maximumFractionDigits: 0}).format(laptop.price);
 }
+
+export const laptop = {
+    setDropdownOptions,
+    updateLaptopSpecs,
+    updateLaptopShowcase,
+}

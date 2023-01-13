@@ -3,13 +3,19 @@ const loanContainerElement = document.getElementById("loan-container");
 const loanAmountElement = document.getElementById("loanAmount");
 const repayLoanBtnElement = document.getElementById("repay-loan-btn");
 
-// Updates the balance in the DOM
-export function updateBalance(balance) {
-    balanceElement.innerText = balance;
+let balance = 0;
+let loan = 0;
+
+const getBalance = () => balance;
+const getLoan = () => loan;
+
+function updateBalance(updatedBalance) {
+    balance = updatedBalance;
+    balanceElement.innerText = updatedBalance;
 }
 
-// Updates the loan in the DOM
-export function updateLoan(loan) {
+function updateLoan(updatedLoan) {
+    loan = updatedLoan;
     if(loan !== 0) {
         loanAmountElement.innerText = loan;
         loanContainerElement.style.display = "";
@@ -20,3 +26,11 @@ export function updateLoan(loan) {
     loanContainerElement.style.display = "none";
     repayLoanBtnElement.style.display = "none";
 }
+
+
+export const bank = {
+    getBalance,
+    updateBalance,
+    getLoan,
+    updateLoan,
+};
