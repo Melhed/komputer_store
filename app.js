@@ -8,10 +8,12 @@ const bankTransferBtnElement = document.getElementById("banktransfer-btn");
 const workBtnElement = document.getElementById("work-btn");
 const dropdownElement = document.getElementById("laptops-dropdown_alternatives");
 const checkoutBtn = document.getElementById("showcase-checkout_btn");
+const purchasedHistory = document.getElementById("laptop-history");
 const APIEndpoint = "https://hickory-quilled-actress.glitch.me/computers";
 const numRegex = new RegExp(/[0-9]/g);
 
 let laptops = [];
+let purchasedLaptops = [];
 let selectedLaptop;
 
 fetch(APIEndpoint)
@@ -28,22 +30,23 @@ function handleLaptopSelection(e) {
     laptop.updateLaptopShowcase(selectedLaptop);
 }
 
+// Grants / denies user's requested loan
 function takeLoan() {
     const loanAmount = prompt("How much would you like to loan?");
     if(bank.getLoan() > 0) return alert("Repay your current loan before taking a new one.");
     if(!numRegex.test(loanAmount)) return alert("Numeric digits only.");
     if(loanAmount > (bank.getBalance()*2) || loanAmount == 0) return alert("You cannot take this loan")
 
-    bank.updateBalance(bank.getBalance() + parseInt(loanAmount));
-    bank.updateLoan(parseInt(loanAmount));
+    bank.deposit(parseInt(loanAmount));
+    bank.increaseLoan(parseInt(loanAmount));
 }
 
 function transferPayToBank() {
     if(work.getPay() === 0) return alert("There is nothing to transfer!");
     if(bank.getLoan() === 0) {
-        bank.updateBalance(bank.getBalance() + work.getPay());
+        bank.deposit(work.getPay());
         work.updatePay(0);
-        return;
+        return
     }
 
     let loanPayment = (work.getPay()*0.1);
@@ -51,22 +54,25 @@ function transferPayToBank() {
     work.updatePay(0);
 
     if(loanPayment >= bank.getLoan()) {
-        loanPayment -= bank.getLoan();
-        bank.updateLoan(0);
-        bank.updateBalance(bank.getBalance() + (bankTransfer + loanPayment));
+        bankTransfer += (loanPayment - bank.getLoan());
+        bank.makeLoanPayment(loanPayment);
+        bank.deposit(bankTransfer);
         return;
     }
-    bank.updateBalance(bank.getBalance() + bankTransfer);
-    bank.updateLoan(bank.getLoan() - loanPayment);
+    bank.deposit(bankTransfer);
+    bank.makeLoanPayment(loanPayment);
 }
 
 function repayLoan() {
-    if(work.getPay() >= bank.getLoan()) {
-        work.updatePay(work.getPay() - bank.getLoan());
-        bank.updateLoan(0);
+    const loan = bank.getLoan();
+
+    if(work.getPay() >= loan) {
+        bank.makeLoanPayment(work.getPay());
+        work.updatePay(work.getPay() - loan);
         return;
     }
-    bank.updateLoan(bank.getLoan() - work.getPay());
+
+    bank.makeLoanPayment(work.getPay());
     work.updatePay(0);
 }
 
@@ -74,13 +80,47 @@ function doWork() {
     work.updatePay(work.getPay() + 100);
 }
 
+// Purchases laptop and adds to laptop history
 function buyLaptop() {
     if(bank.getBalance() >= selectedLaptop.price) {
-        bank.updateBalance(bank.getBalance() -= selectedLaptop.price);
+        bank.withdraw(selectedLaptop.price);
         alert(`You have purchased the ${selectedLaptop.title}!`);
+        laptop.purchaseLaptop(selectedLaptop);
+
+        purchasedLaptops.push({
+            "id" : laptop.getCurrentTime(),
+            "price" : parseInt(selectedLaptop.price),
+        });
         return;
     }
     alert(`You need ${selectedLaptop.price - bank.getBalance()} kr more to afford this laptop!`);
+}
+
+// Refunds laptop based on click event
+function refundLaptop(e) {
+    const laptopId = e.target.id;
+    const laptopIndex = getPurchasedLaptopIndex(laptopId);
+
+    if(laptopIndex === -1) {
+        return;
+    }
+    const msg = confirm("Are you sure you want to refund?");
+    if(!msg) {
+        return;
+    }
+    
+    bank.deposit(purchasedLaptops[laptopIndex].price);
+    purchasedLaptops.splice(laptopIndex, 1);
+    purchasedHistory.removeChild(document.getElementById(laptopId));
+}
+
+function getPurchasedLaptopIndex (id) {
+    for(let i = 0; i < purchasedLaptops.length; i ++) {
+        if(purchasedLaptops[i].id === id) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 takeLoanBtnElement.addEventListener("click", takeLoan);
@@ -89,3 +129,4 @@ bankTransferBtnElement.addEventListener("click", transferPayToBank);
 workBtnElement.addEventListener("click", doWork);
 dropdownElement.addEventListener("change", handleLaptopSelection);
 checkoutBtn.addEventListener("click", buyLaptop);
+purchasedHistory.addEventListener("click", refundLaptop)
