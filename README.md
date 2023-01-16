@@ -5,8 +5,8 @@ What is Komputer Store?
 
 What technologies were used?
 	The project was created using HTML, vanilla JS, and Tailwind CSS.
-	I chose to stick to a simple design and focus on functionality which made Tailwind CSS and it's, in my opinion, more readable inline-styling (compared to vanilla CSS) 
-	a suitable fit for the project. 
+	I chose to stick to a simple design and focus on functionality which made Tailwind CSS and it's, in my opinion, more readable inline-styling 
+	(compared to vanilla CSS) a suitable fit for the project. 
 	
 What challenges were faced?
 	The app.js file turned out quite large and cluttered which lead me to make use of modules. This allowed me to export the main functionality of the bank, work, and 
