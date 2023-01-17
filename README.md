@@ -20,5 +20,5 @@
 * Laptop showcase
 	- Laptop dropdown: Allows you to choose which laptop to display.
 	- BUY NOW: Allows you to purchase a laptop, assuming your bank balance covers the price.
-* Inventory
+* Inventory (wasn't part of original assignment)
 	- Refund: Allows you to refund the laptops you have chosen. The refund goes to your bank account. 
